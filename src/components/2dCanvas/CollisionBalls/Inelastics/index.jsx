@@ -123,4 +123,6 @@ export default function InelasticCollisionBalls() {
       }
     }
   }
+
+  return <Canvas draw={frame} height={height} width={width} />;
 }
