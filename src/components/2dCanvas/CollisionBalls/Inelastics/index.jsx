@@ -14,7 +14,7 @@ class Ball {
 
 export default function InelasticCollisionBalls() {
   const [balls, setBalls] = useState([]);
-  const [ballsQuantity, setBallsQuantity] = useState(500);
+  const [ballsQuantity, setBallsQuantity] = useState(400);
   const [ballsSize, setBallsSize] = useState(20);
   const width = document.documentElement.clientWidth;
   const height = document.documentElement.clientHeight;
@@ -141,13 +141,47 @@ export default function InelasticCollisionBalls() {
     }
   };
 
+  const pushEvent = (clickPos) => {
+    for (const ball of balls) {
+      const distV = clickPos.subtract(ball.positionCurrent, true);
+      const distVVal = distV.length();
+      const unitDistV = distV.normalize(true);
+      const vectToMouse = unitDistV.multiply(1000 / distVVal ** 1, true);
+      ball.positionOld = ball.positionOld.add(vectToMouse, true);
+    }
+  };
+
+  const pullEvent = (clickPos) => {
+    for (const ball of balls) {
+      const distV = ball.positionCurrent.subtract(clickPos, true);
+      const distVVal = distV.length();
+      const unitDistV = distV.normalize(true);
+      const vectToMouse = unitDistV.multiply(1000 / distVVal ** 1, true);
+      ball.positionOld = ball.positionOld.add(vectToMouse, true);
+    }
+  };
+
   const onClick = (e) => {
     const clickPos = Vec2(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
     paintEvent(clickPos);
-    liftEvent(clickPos);
+    // liftEvent(clickPos);
+    pushEvent(clickPos);
+  };
+
+  const onRightClick = (e) => {
+    e.preventDefault();
+    const clickPos = Vec2(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+    paintEvent(clickPos);
+    pullEvent(clickPos);
   };
 
   return (
-    <Canvas draw={frame} height={height} width={width} onClick={onClick} />
+    <Canvas
+      draw={frame}
+      height={height}
+      width={width}
+      onClick={onClick}
+      onRightClick={onRightClick}
+    />
   );
 }

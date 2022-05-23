@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useEffect, useRef } from "react";
 
 const Canvas = (props) => {
-  const { draw, height, width, onClick } = props;
+  const { draw, height, width, onClick, onRightClick } = props;
   const canvas = useRef();
 
   useEffect(() => {
@@ -19,8 +19,19 @@ const Canvas = (props) => {
     drawFunc(0);
   });
 
+  useEffect(() => {
+    // Prevent right click popover
+    window.addEventListener("contextmenu", (e) => e.preventDefault());
+  });
+
   return (
-    <canvas ref={canvas} height={height} width={width} onClick={onClick} />
+    <canvas
+      ref={canvas}
+      height={height}
+      width={width}
+      onClick={onClick}
+      onAuxClick={onRightClick}
+    />
   );
 };
 
