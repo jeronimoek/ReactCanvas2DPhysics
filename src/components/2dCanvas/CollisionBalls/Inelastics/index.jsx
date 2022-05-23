@@ -124,5 +124,30 @@ export default function InelasticCollisionBalls() {
     }
   }
 
-  return <Canvas draw={frame} height={height} width={width} />;
+  const paintEvent = (clickPos) => {
+    const color = `hsl(${Math.round(Math.random() * 360)}, 100%, 50%)`;
+    for (const ball of balls) {
+      if (ball.positionCurrent.distance(clickPos) < 300) {
+        ball.color = color;
+      }
+    }
+  };
+
+  const liftEvent = (clickPos) => {
+    for (const ball of balls) {
+      if (ball.positionCurrent.distance(clickPos) < 300) {
+        ball.positionOld = ball.positionCurrent.add(Vec2(0, 10), true);
+      }
+    }
+  };
+
+  const onClick = (e) => {
+    const clickPos = Vec2(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+    paintEvent(clickPos);
+    liftEvent(clickPos);
+  };
+
+  return (
+    <Canvas draw={frame} height={height} width={width} onClick={onClick} />
+  );
 }

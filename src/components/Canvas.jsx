@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
 import { useEffect, useRef } from "react";
 
-const Canvas = ({ draw, height, width }) => {
+const Canvas = (props) => {
+  const { draw, height, width, onClick } = props;
   const canvas = useRef();
 
   useEffect(() => {
@@ -18,7 +19,9 @@ const Canvas = ({ draw, height, width }) => {
     drawFunc(0);
   });
 
-  return <canvas ref={canvas} height={height} width={width} />;
+  return (
+    <canvas ref={canvas} height={height} width={width} onClick={onClick} />
+  );
 };
 
 Canvas.propTypes = {
