@@ -1,14 +1,6 @@
-import Canvas from "../../Canvas";
+import Canvas from "../../../Canvas";
 import Vec2 from "vec2";
 import { useEffect, useState } from "react";
-
-const testDraw = (context) => {
-  context.fillStyle = "rgb(200, 0, 0)";
-  context.fillRect(10, 10, 50, 50);
-
-  context.fillStyle = "rgba(0, 0, 200, 0.5)";
-  context.fillRect(30, 30, 50, 50);
-};
 
 class Ball {
   acceleration = Vec2(0, 0);
@@ -20,7 +12,7 @@ class Ball {
   }
 }
 
-export default function CollisionBalls() {
+export default function InelasticCollisionBalls() {
   const [balls, setBalls] = useState([]);
   const [ballsQuantity, setBallsQuantity] = useState(500);
   const [ballsSize, setBallsSize] = useState(20);
@@ -131,5 +123,4 @@ export default function CollisionBalls() {
       }
     }
   }
-  return <Canvas draw={frame} height={height} width={width} />;
 }

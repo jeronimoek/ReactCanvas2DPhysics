@@ -1,8 +1,8 @@
 import "./App.css";
-import CollisionBalls from "./components/2dCanvas/CollisionBalls";
+import InelasticCollisionBalls from "./components/2dCanvas/CollisionBalls/Inelastic";
 
 function App() {
-  return <CollisionBalls />;
+  return <InelasticCollisionBalls />;
 }
 
 export default App;
